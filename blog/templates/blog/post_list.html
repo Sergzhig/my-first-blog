@@ -1,31 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Zhig</title>
-</head>
-<body>
-        <div>
-            <h1><a href="/">Zhig Blog</a></h1>
-        </div>
+{% extends 'blog/base.html' %}
+{%load static%}
 
-        <div>
-            <p>published: 28.04.2020, 12:30</p>
-            <h2><a href="">My first post</a></h2>
-            <p>Всем привет!!</p>
-        </div>
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+{% endblock css %}
 
-        <div>
-            <p>published: 28.04.2020, 12:30</p>
-            <h2><a href="">My second post</a></h2>
-            <p>Используй команду git status перед git add </p>
-        </div>
-        {% for post in posts %}
-            <div>
-                <p>published: {{ post.published_date }}</p>
-                <h1><a href="">{{ post.title }}</a></h1>
-                <p>{{ post.text|linebreaksbr }}</p>
-            </div>
-        {% endfor %}
-</body>
-</html>
+{% block title %} {{title}} {% endblock title %}
+
+{% block content %}
+
+  {% for post in posts %}
+      <div>
+
+          <p>published: {{ post.published_date }}</p>
+
+          <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+
+          <p>{{ post.text|linebreaksbr|truncatewords:20 }}</p>
+          <hr/>
+<!--           {%if forloop.last%}-->
+<!--                <hr/>-->
+<!--            {%endif%}-->
+
+          {% empty %} <p> Sorry, no posts</p>>
+      </div>
+  {% endfor %}
+
+{% endblock %}

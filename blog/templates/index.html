@@ -1,12 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'blog/base.html' %}
+{%load static%}
+{% block content %}
+
 <head>
     <meta charset="UTF-8">
     <title>Zhig_answer</title>
 </head>
 <body>
 <h1>Ответ пришельцу</h1>
+<p>?name=Федор&type=Робот&humanoid=ДА</p>
 <p>Привет,{{name}} , длина твоего имени {{name_length}} символов </p>
 <p>Ты {{type}}</p>
 </body>
-</html>
+
+{% endblock content %}

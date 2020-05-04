@@ -8,10 +8,18 @@ class Post(models.Model):
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
+    update_date = models.DateTimeField(default=timezone.now)
 
     def publish(self):
         self.published_date = timezone.now()
         self.save()
 
     def __str__(self):
-        return self.title
+        return "%s-%s" %(self.pk,self.title)
+
+    def save(self, *args, **kwargs):
+        ''' On save, update  '''
+        if not self.id:
+            self.created_date = timezone.now()
+        self.update_date = timezone.now()
+        return super(Post, self).save(*args, **kwargs)
