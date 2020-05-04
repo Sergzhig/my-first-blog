@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Zhig-сайт: {% block title %}{% endblock title %}</title>
+    <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">-->
+    <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">-->
+<!--    <link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic" rel="stylesheet" type="text/css">-->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block css%}
+    {% endblock css %}
+
+
+</head>
+<body>
+    {% block header %}
+        {% include "includes/header.html" %}
+    {% endblock header %}
+
+        <div class="page-header">
+            <h1><a href="/">Zhig Blog</a></h1>
+        </div>
+
+        <div class="post">
+            <hr />
+            <h2><a href="/">Сайт-памятка по настройке web-приложений</a></h2>
+            <p>Перейти к интересующей статье можно по ссылке, либо указав номер (ID) статьи в адресной строке/post/ID/ </p>
+        </div>
+        <br />
+        <hr />
+        <div>
+            {%block content%}
+            {%endblock%}
+        </div>
+
+{% block footer %}
+    {% include "includes/footer.html " %}
+{% endblock footer %}
+</body>
+</html>
