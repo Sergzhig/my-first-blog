@@ -1,41 +1,79 @@
-<!DOCTYPE html>
 {% load static %}
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title> Zhig-сайт: {% block title %}{% endblock title %}</title>
-    <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">-->
-    <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">-->
-<!--    <link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic" rel="stylesheet" type="text/css">-->
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    {% block css%}
-    {% endblock css %}
-
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+<!--    {% block css%}-->
+<!--    {% endblock css %}-->
 
 </head>
+
 <body>
+
     {% block header %}
         {% include "includes/header.html" %}
     {% endblock header %}
 
-        <div class="page-header">
-            <h1><a href="/">Zhig Blog</a></h1>
-        </div>
 
-        <div class="post">
-            <hr />
-            <h2><a href="/">Сайт-памятка по настройке web-приложений</a></h2>
-            <p>Перейти к интересующей статье можно по ссылке, либо указав номер (ID) статьи в адресной строке/post/ID/ </p>
-        </div>
-        <br />
-        <hr />
-        <div>
-            {%block content%}
-            {%endblock%}
-        </div>
 
-{% block footer %}
-    {% include "includes/footer.html " %}
-{% endblock footer %}
+    <section>
+
+        <div class="container pt-3">
+            <div class="row">
+                <div class="col-xl-4 col-sm-2 col-3" style="min-height:540px; background-color:CornflowerBlue">
+                    <p>Последние 5 статей:</p>
+                    {%block five %}
+                        <ul class="links">
+                        {% for post in posts_five %}
+                            <li> <a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></li>
+                        {% endfor %}
+                        </ul>
+
+
+                        <br/> <hr/>
+                        <p>АРХИВ СТАТЕЙ</p>
+                            <a href="/">{{ 2020 }}</a>
+                            <br/>
+
+                            {% for key, value in arh.items %}
+                                <a href="{% url 'arhive_month' 2020 key %}"> 2020 {{value}} </a>
+                                <br/>
+                            {% endfor %}
+                    {%endblock%}
+
+                </div>
+                <div class="col-xl-8 col-sm-10 col-9 text-left" style="min-height:540px; background-color:linen">
+                    <div>
+                        <h2><a href="/">Сайт-памятка по настройке web-приложений</a></h2>
+                        <p>Перейти к интересующей статье можно по ссылке, либо, указав номер (ID) статьи в адресной строке/post/5/ .  По ID можно открыть еще неопубликованные статьи  </p>
+                    </div>
+                    <br />
+                    <hr />
+                    <div>
+                        {%block content%}
+                        {%endblock%}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+
+
+    {% block footer %}
+        {% include "includes/footer.html" %}
+    {% endblock footer %}
+
+
+
+
+
+
+
+
 </body>
 </html>
