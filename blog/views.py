@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
+from django.shortcuts import redirect
 from .models import Post
+from .forms import Post_form
 from django.utils import timezone
 
 month_dict = {
@@ -66,3 +68,31 @@ def arhive_month(request, year, month):
     posts = Post.objects.filter(published_date__month=month).filter(published_date__year=year).order_by('-published_date')
     title = "Архив" + " " + month_dict[month]+" "+str(year)
     return render(request, 'blog/arhive_month.html', {'posts': posts,'title': title})
+
+def post_new(request):
+    if request.method == "POST":
+        form = Post_form(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.published_date = timezone.now()
+            post.save()
+            return redirect('post_detail', pk=post.pk)
+    else:
+        form = Post_form()
+    return render(request, 'blog/post_edit.html', {'form': form})
+
+def post_edit(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        form = Post_form(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.published_date = timezone.now()
+            post.update_date=timezone.now()
+            post.save()
+            return redirect('post_detail', pk=post.pk)
+    else:
+        form = Post_form(instance=post)
+    return render(request, 'blog/post_edit.html', {'form': form})

@@ -19,9 +19,21 @@
 
     <section>
 
-        <div class="container pt-3">
+        <div class="container pt" style="background-color:#D6EAF8">
             <div class="row">
-                <div class="col-xl-4 col-sm-2 col-3" style="min-height:540px; background-color:CornflowerBlue">
+                <h2><a href="/">Сайт-памятка по настройке web-приложений</a></h2>
+                <p>Перейти к интересующей статье можно по ссылке, либо, указав номер (ID) статьи в адресной строке/post/5/ . <br> По ID можно открыть еще неопубликованные статьи  </p>
+
+            <div/>
+        <div/>
+
+    </section>
+
+    <section>
+
+        <div class="container pt-2">
+            <div class="row">
+                <div class="col-xl-4 col-sm-2 col-3" style="background-color:CornflowerBlue">
                     <p>Последние 5 статей:</p>
                     {%block five %}
                         <ul class="links">
@@ -35,18 +47,19 @@
                         <p>АРХИВ СТАТЕЙ</p>
                             <a href="/">{{ 2020 }}</a>
                             <br/>
-
+                    <div>
                             {% for key, value in arh.items %}
                                 <a href="{% url 'arhive_month' 2020 key %}"> 2020 {{value}} </a>
                                 <br/>
                             {% endfor %}
+                    </div>
                     {%endblock%}
 
                 </div>
                 <div class="col-xl-8 col-sm-10 col-9 text-left" style="min-height:540px; background-color:linen">
+
                     <div>
-                        <h2><a href="/">Сайт-памятка по настройке web-приложений</a></h2>
-                        <p>Перейти к интересующей статье можно по ссылке, либо, указав номер (ID) статьи в адресной строке/post/5/ .  По ID можно открыть еще неопубликованные статьи  </p>
+                        <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"> Добавить новую запись</span></a>
                     </div>
                     <br />
                     <hr />

@@ -10,4 +10,6 @@ urlpatterns = [
     path('post/<int:pk>/', views.post_detail, name='post_detail'),
     #path('arhive/<int:year>/', views.arhive, name='arhive'),
     path('arhive/<int:year>/<int:month>/', views.arhive_month, name='arhive_month'),
+    path('post/new/', views.post_new, name='post_new'),
+    path('post/<int:pk>/edit/', views.post_edit, name='post_edit'),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
