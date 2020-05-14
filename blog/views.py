@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from .models import Post
-from .forms import Post_form
+from .models import Post, Comment
+from .forms import Post_form, Comment_form
 from django.utils import timezone
 
 month_dict = {
@@ -61,8 +61,17 @@ def index_ren(request):
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     posts_five = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')[0:4]
+    comments =Comment.objects.filter(page=pk)
     title = "Статья"
-    return render(request, 'blog/post_detail.html', {'post': post,'posts_five':posts_five,'title': title})
+    context = {
+        'post': post,
+        'posts_five':posts_five,
+        'title': title,
+        'comments':comments,
+        "arh": month_dict
+    }
+
+    return render(request, 'blog/post_detail.html', context=context)
 
 def arhive_month(request, year, month):
     posts = Post.objects.filter(published_date__month=month).filter(published_date__year=year).order_by('-published_date')
@@ -96,3 +105,18 @@ def post_edit(request, pk):
     else:
         form = Post_form(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
+
+def comment_new(request):
+    if request.method == "POST":
+        form = Comment_form(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.published_date = timezone.now()
+            comment.save()
+            return redirect('post_detail', pk=comment.page_id)
+    else:
+        form = Comment_form()
+    return render(request, 'blog/comment_edit.html', {'form': form})
+
+

@@ -16,12 +16,13 @@
 {% block content %}
 
       <div>
-        {% if post.published_date %}
+        <a class="btn btn-default"  style="color:#0037ff" href="{% url 'post_edit' pk=post.pk %}">---Редактировать запись---<span class="glyphicon glyphicon-pencil"></span></a>
+          <br><pr>
+          {% if post.published_date %}
             <div>
                 {{ post.published_date }}
             </div>
-        {% endif %}
-        <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}">Редактировать<span class="glyphicon glyphicon-pencil"></span></a>
+           {% endif %}
           <h1>{{ post.title }}</h1>
 
           <p>{{ post.text|linebreaksbr }}</p>
@@ -30,6 +31,12 @@
                 {{ post.update_date }}
             </div>
         {% endif %}
+        <hr/>
+          {%for comment in comments%}
+          <p>{{comment.author.get_full_name}} </p>
+          <p>{{comment.created_date}}</p>
+          <p>{{comment.text}}</p>
+          {% endfor %}
 
       </div>
 {% endblock %}
