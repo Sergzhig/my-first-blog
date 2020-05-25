@@ -1,0 +1,162 @@
+{%load static%}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Zhig-сайт: {% block title %}{% endblock title %}</title>
+
+    <!-- EXTERNAL CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Pe-icon-7-stroke.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/social-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.css' %}">
+
+    <!-- MY CSS -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    <!-- FAVICON -->
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static '/img/logo.png' %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static '/img/logo.png' %}">
+    <link rel="icon" type="image/png" href="{% static '/img/logo_mb.png' %}" sizes="196x196">
+    <link rel="icon" type="image/png" href="{% static '/img/logo_mb.png' %}" sizes="96x96">
+    <link rel="icon" type="image/png" href="{% static '/img/logo_mb.png' %}" sizes="32x32">
+
+</head>
+
+<body>
+
+{% block header %}
+{% include "includes/header.html" %}
+{% endblock header %}
+
+
+<!-- MAIN -->
+<main>
+    <div class="container">
+        <div class="row">
+
+            <!-- General informations -->
+            <div class="col-xs-12">
+                <section class="general-info white-box">
+                    <div class="author">
+                        <img src="{% static '/img/Zhig22.jpg' %}" alt="Zhig" data-rjs="2">
+                        <ul class="author-nav">
+                            <li><a href="{% url 'contact' %}" title=""><i class="pe-7s-paper-plane"></i> Write message</a></li>
+                        </ul>
+                    </div>
+                    <div class="general-info-right">
+                        <h1>I’m Sergey Zhyhar</h1>
+                        <div class="social">
+                            <a href="" title="Twitter"><i class="icon-social_twitter_circle"></i></a>
+                            <a href="https://github.com/Sergzhig" title="Github"><i
+                                    class="icon-social_github_circle"></i></a>
+                            <a href="" title="LinkedIn"><i class="icon-social_linkedin_circle"></i></a>
+                        </div>
+                        <div class="clear"></div>
+                        <span class="general-info-right-author-info">Front-End Developer without Company</span>
+                        <p> Я толи британец толи беларус. Поэтому сайт написан на двух языках вперемешку.
+                            Работаю как IT-специалист в банковской сфере.
+                        </p>
+                        <p>Увлекаюсь программированием на Phyton, разработкой web-приложений на веб-фреймворке
+                            Django.</p>
+                        <p> Имею маленький бизнесс-хобби в ивент-сфере.</p>
+                        <img src="{% static 'img/signature.jpg' %}" alt="signature" title="Author Signature"
+                             data-rjs="2">
+                    </div>
+                </section>
+            </div>
+
+            <!-- Details informations -->
+            <div class="col-xs-12">
+                <section class="detail-info white-box">
+                    <div class="detail-info-philosophy">
+                        <h2>My philoshopy</h2>
+                        <p>
+                            Чтобы понять мою философию, а также убедиться, что я не последний философ, нужно перечитать
+                            мой блог, например рубрику TRIP.
+                        </p>
+
+                    </div>
+                    <div class="detail-info-skills">
+                        <h2>Skills</h2>
+                        <ol>
+                            <li>
+                                <span>01</span>
+                                <div class="detail-info-skills-right">
+                                    <h3>HTML CSS DJANGO</h3>
+                                    <p>
+                                        Основы. Разработал этот крутой сайт.<br>
+
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <span>02</span>
+                                <div class="detail-info-skills-right">
+                                    <h3>PHYTON</h3>
+                                    <p>
+                                        Основы. Прошел курс Stormnet.
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <span>03</span>
+                                <div class="detail-info-skills-right">
+                                    <h3>SQL</h3>
+                                    <p>
+                                        Основы. Работал с большими базами под управлением СУБД ORACLE. Изучаю PostgeSQL.
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <span>04</span>
+                                <div class="detail-info-skills-right">
+                                    <h3>SOFT SKILLS</h3>
+                                    <p>
+                                        Имею большой опыт работы в стрессовых ситуациях, работы с командой, принятия
+                                        сложных решений, нетворкинге.
+                                        Обладаю качествами и навыками: ответственность, крититческое мышление,
+                                        креативность, целеустремленность, коммуникабельность.
+
+                                    </p>
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Counters -->
+            <div class="col-xs-12">
+                <section class="counters white-box">
+                    <div class="counters-one">
+                        <span class="counters-one-icon"><i class="pe-7s-cart"></i></span>
+                        <h2>2540</h2>
+                        <p>Product sales</p>
+                    </div>
+                    <div class="counters-one">
+                        <span class="counters-one-icon"><i class="pe-7s-news-paper"></i></span>
+                        <h2>400</h2>
+                        <p>Line of Code</p>
+                    </div>
+                    <div class="counters-one">
+                        <span class="counters-one-icon"><i class="pe-7s-photo"></i></span>
+                        <h2>1050005</h2>
+                        <p>Taking photos</p>
+                    </div>
+                    <div class="counters-one">
+                        <span class="counters-one-icon"><i class="pe-7s-tools"></i></span>
+                        <h2>100500</h2>
+                        <p>Bug fixed</p>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+    </div>
+</main>
+<!-- end MAIN -->

@@ -6,46 +6,49 @@ from .forms import Post_form, Comment_form
 from django.utils import timezone
 
 month_dict = {
-    1:"Январь",
-    2:"Февраль",
-    3:"Март",
-    4:"Апрель",
-    5:"Май",
-    6:"Июнь",
-    7:"Июль",
-    8:"Август",
-    9:"Сентябрь",
-    10:"Октябрь",
-    11:"Ноябрь",
-    12:"Декабрь"
+    1: "Январь",
+    2: "Февраль",
+    3: "Март",
+    4: "Апрель",
+    5: "Май",
+    6: "Июнь",
+    7: "Июль",
+    8: "Август",
+    9: "Сентябрь",
+    10: "Октябрь",
+    11: "Ноябрь",
+    12: "Декабрь"
 }
+
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
     posts_five = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')[0:4]
 
-    context={
+    context = {
 
-        "title":"Страница блога",
+        "title": "Страница блога",
         "posts": posts,
-        "posts_five" : posts_five,
+        "posts_five": posts_five,
         "arh": month_dict
     }
     return render(request, 'blog/post_list.html', context=context)
 
+
 def index(request):
     print(request.GET)
-    name=request.GET.get('name')
+    name = request.GET.get('name')
     type = request.GET.get('type')
     humanoid = request.GET.get('humanoid')
-    #print(name)
-    #return HttpResponse('Hello, Ernest')
-    if humanoid =="ДА":
-        s_hum='ты человечище!'
+    # print(name)
+    # return HttpResponse('Hello, Ernest')
+    if humanoid == "ДА":
+        s_hum = 'ты человечище!'
     else:
-        s_hum='жаль, что ты не человек!'
+        s_hum = 'жаль, что ты не человек!'
 
-    return HttpResponse('<h> Привет, %s %s,- %s </h>'%(type,name,s_hum))
+    return HttpResponse('<h> Привет, %s %s,- %s </h>' % (type, name, s_hum))
+
 
 def index_ren(request):
     name = request.GET.get('name')
@@ -58,25 +61,29 @@ def index_ren(request):
     }
     return render(request, 'index.html', context=context)
 
+
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     posts_five = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')[0:4]
-    comments =Comment.objects.filter(page=pk)
+    comments = Comment.objects.filter(page=pk)
     title = "Статья"
     context = {
         'post': post,
-        'posts_five':posts_five,
+        'posts_five': posts_five,
         'title': title,
-        'comments':comments,
+        'comments': comments,
         "arh": month_dict
     }
 
     return render(request, 'blog/post_detail.html', context=context)
 
+
 def arhive_month(request, year, month):
-    posts = Post.objects.filter(published_date__month=month).filter(published_date__year=year).order_by('-published_date')
-    title = "Архив" + " " + month_dict[month]+" "+str(year)
-    return render(request, 'blog/arhive_month.html', {'posts': posts,'title': title})
+    posts = Post.objects.filter(published_date__month=month).filter(published_date__year=year).order_by(
+        '-published_date')
+    title = "Архив" + " " + month_dict[month] + " " + str(year)
+    return render(request, 'blog/arhive_month.html', {'posts': posts, 'title': title})
+
 
 def post_new(request):
     if request.method == "POST":
@@ -91,6 +98,7 @@ def post_new(request):
         form = Post_form()
     return render(request, 'blog/post_edit.html', {'form': form})
 
+
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
@@ -99,12 +107,13 @@ def post_edit(request, pk):
             post = form.save(commit=False)
             post.author = request.user
             post.published_date = timezone.now()
-            post.update_date=timezone.now()
+            post.update_date = timezone.now()
             post.save()
             return redirect('post_detail', pk=post.pk)
     else:
         form = Post_form(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
+
 
 def comment_new(request):
     if request.method == "POST":
@@ -120,3 +129,9 @@ def comment_new(request):
     return render(request, 'blog/comment_edit.html', {'form': form})
 
 
+def about_me(request):
+    return render(request, 'blog/about_me.html')
+
+
+def contact(request):
+    return render(request, 'blog/contact.html')

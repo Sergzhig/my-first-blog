@@ -1,0 +1,122 @@
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Zhig-сайт: {% block title %}{% endblock title %}</title>
+
+    <!-- EXTERNAL CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Pe-icon-7-stroke.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/social-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.css' %}">
+
+    <!-- MY CSS -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    <!-- FAVICON -->
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static '/img/logo.png' %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static '/img/logo.png' %}">
+    <link rel="icon" type="image/png" href="{% static '/img/logo_mb.png' %}" sizes="196x196">
+    <link rel="icon" type="image/png" href="{% static '/img/logo_mb.png' %}" sizes="96x96">
+    <link rel="icon" type="image/png" href="{% static '/img/logo_mb.png' %}" sizes="32x32">
+
+</head>
+
+<body>
+
+{% block header %}
+{% include "includes/header.html" %}
+{% endblock header %}
+
+
+<!-- MAIN -->
+<main>
+    <div class="container">
+        <div class="row">
+
+            <!-- Details informations -->
+            <div class="col-xs-12">
+                <section class="contact two-column-inside white-box">
+                    <div class="contact-me">
+                        <h2>Contact me</h2>
+                        <ul>
+                            <li>
+                                <i class="pe-7s-mail"></i>
+                                <div class="contact-me-right">
+                                    <p>sergzhig@gmail.com</p>
+
+                                </div>
+                            </li>
+                            <li>
+                                <i class="pe-7s-call"></i>
+                                <div class="contact-me-right">
+                                    <p>+375297777777</p>
+                                    <span class="contact-me-right-desc">phone</span>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="pe-7s-map-marker"></i>
+                                <div class="contact-me-right">
+                                    <p>Dzerzhinskogo ave. <br/>
+                                        Minsk </p>
+                                    <span class="contact-me-right-desc">address</span>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="pe-7s-paper-plane"></i>
+                                <div class="contact-me-right">
+                                    <p><a href="https://t.me/ZhigSerg" title="telegram">@ZhigSerg</a></p>
+                                    <span class="contact-me-right-desc">telegram</span>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="pe-7s-paper-plane"></i>
+                                <div class="contact-me-right">
+                                    <p><a href="https://vk.com/zhigar" title="vkontakte">VK</a></p>
+                                    <span class="contact-me-right-desc">vkontakte</span>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="get-in-touch">
+                        <h2>Get in touch</h2>
+                        <p class="font-primary"> Ask me a question.</p>
+                        <form action="">
+                            <input class="col-xs-12 form-control" type="text" placeholder="Name" name="name">
+                            <input class="col-xs-12 form-control" type="email" placeholder="Email" name="email">
+                            <textarea class=" col-xs-12 form-control" id="" rows="6" placeholder="Question"
+                                      name="question"></textarea>
+                            <button type="submit" class="btn"><i class="pe-7s-paper-plane"></i> Send</button>
+                        </form>
+                    </div>
+                </section>
+            </div>
+
+
+            <!-- Google Map -->
+            <div class="col-xs-12">
+                <section class="white-box contact-map">
+                    <div id="contact-map-inside">
+                        <br> <br>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3374.0119422580055!2d27.515098566792197!3d53.88585514068319!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46dbd00486051cb5%3A0x6694b57b08476e2e!2z0L_RgNC-0YHQv9C10LrRgiDQlNC30LXRgNC20LjQvdGB0LrQvtCz0L4gMTksINCc0LjQvdGB0LogMjIwMDg5!5e0!3m2!1sru!2sby!4v1590421350035!5m2!1sru!2sby"
+                                width="850" height="400" frameborder="0" style="border:0;" allowfullscreen=""
+                                aria-hidden="false" tabindex="0"></iframe>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+    </div>
+    {% block footer %}
+    {% include "includes/footer.html" %}
+    {% endblock footer %}
+</main>
+<!-- end MAIN -->
+</body>

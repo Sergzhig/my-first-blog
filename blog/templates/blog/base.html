@@ -1,96 +1,157 @@
 {% load static %}
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title> Zhig-сайт: {% block title %}{% endblock title %}</title>
+
+    <!-- EXTERNAL CSS -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-<!--    {% block css%}-->
-<!--    {% endblock css %}-->
+    <link rel="stylesheet" href="{% static 'css/Pe-icon-7-stroke.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/social-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.css' %}">
+
+    <!-- MY CSS -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    <!-- FAVICON -->
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static '/img/logo.png' %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static '/img/logo.png' %}">
+    <link rel="icon" type="image/png" href="{% static '/img/logo_mb.png' %}" sizes="196x196">
+    <link rel="icon" type="image/png" href="{% static '/img/logo_mb.png' %}" sizes="96x96">
+    <link rel="icon" type="image/png" href="{% static '/img/logo_mb.png' %}" sizes="32x32">
 
 </head>
 
 <body>
 
-    {% block header %}
-        {% include "includes/header.html" %}
-    {% endblock header %}
+{% block header %}
+{% include "includes/header.html" %}
+{% endblock header %}
 
 
+<!-- MAIN -->
+<main>
 
-    <section>
+    <div class="container">
+        <div class="row">
+            {% block category_title %}
+            <!-- CATEGORY TITLE -->
+            <div class="col-xs-12">
+                <section class="category-title">
 
-        <div class="container pt" style="background-color:#D6EAF8">
-            <div class="row">
-                <h2><a href="/">Сайт-памятка по настройке web-приложений</a></h2>
-                <p>Перейти к интересующей статье можно по ссылке, либо, указав номер (ID) статьи в адресной строке/post/5/ . <br> По ID можно открыть еще неопубликованные статьи  </p>
-
-            <div/>
-        <div/>
-
-    </section>
-
-    <section>
-
-        <div class="container pt-2">
-            <div class="row">
-                <div class="col-xl-4 col-sm-2 col-3" style="background-color:CornflowerBlue">
-                    <p>Последние 5 статей:</p>
-                    {%block five %}
-                        <ul class="links">
-                        {% for post in posts_five %}
-                            <li> <a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></li>
-                        {% endfor %}
-                        </ul>
-
-
-                        <br/> <hr/>
-                        <p>АРХИВ СТАТЕЙ</p>
-                            <a href="/">{{ 2020 }}</a>
-                            <br/>
-                    <div>
-                            {% for key, value in arh.items %}
-                                <a href="{% url 'arhive_month' 2020 key %}"> 2020 {{value}} </a>
-                                <br/>
-                            {% endfor %}
+                    <div class="container pt">
+                        <div class="row">
+                            <h2><a href="/">Блог-памятка по настройке web-приложений</a></h2>
+                            <p>Перейти к интересующей статье можно, указав номер (ID) статьи в адресной
+                                строке/post/5/ . </br>По ID можно открыть еще неопубликованные статьи </p>
+                        </div>
                     </div>
+                </section>
+            </div>
+            {% endblock %}
+            <!-- end CATEGORY TITLE -->
+
+            <!-- ARTICLES -->
+            <div class="col-lg-8 col-xs-12">
+                <section class="articles">
+                    {%block content%}
                     {%endblock%}
+                </section>
+            </div>
 
-                </div>
-                <div class="col-xl-8 col-sm-10 col-9 text-left" style="min-height:540px; background-color:linen">
+            <!-- AUTHOR -->
+            <div class="aside-blocks col-lg-4 col-xs-12">
 
-                    <div>
+
+                <aside class="categories">
+                    <h2 class="aside-title">Menu</h2>
+                    <ul>
                         {% if user.is_authenticated %}
-                        <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"> Добавить новую запись</span></a>
-                        <br>
-                        <a href="{% url 'comment_new' %}" > Добавить новый комментарий</a>
+                        <li class="nav-elipse-blue"><a href="{% url 'post_new' %}" title="Add a new post">New post</a>
+                        </li>
+                        <li class="nav-elipse-red"><a href="{% url 'comment_new' %}" title="Add a new comment">Add
+                            comment</a></li>
+                        {% else %}
+                        <li class="buyproducts-link-"><a href="/admin/" title="Log IN">LOG IN </a></li>
                         {% endif %}
-                    </div>
-                    <br />
-                    <hr />
-                    <div>
-                        {%block content%}
-                        {%endblock%}
-                    </div>
+                        <li class="nav-elipse-yellow"><a href="#" title="Reserve">Reserve</a></li>
+                        <li class="nav-elipse-green"><a href="#" title="Reserve">Reserve</a></li>
 
-                </div>
+                    </ul>
+
+                </aside>
+
+                <aside>
+                    <a href="http://photoidea.by/"><img src="{% static '/img/photoidea_k.png' %}" alt="photoidea"
+                                                        data-rjs="2"></a>
+                </aside>
+                <aside class="last-project">
+                    <h2 class="aside-title">Last 5 Posts</h2>
+                    <div class="last-project-one">
+                        {%block five %}
+                        <ul class="links">
+                            {% for post in posts_five %}
+                            <li><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></li>
+                            </hr>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </aside>
+                <aside class="last-project">
+                    <h2 class="aside-title">АРХИВ СТАТЕЙ</h2>
+                    <div class="last-project-one">
+                        <a href="/">{{ 2020 }}</a>
+                        <br/>
+                        <div>
+                            {% for key, value in arh.items %}
+                            <a href="{% url 'arhive_month' 2020 key %}"> 2020 {{value}} </a>
+                            <br/>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </aside>
+                {%endblock%}
+
+                <aside class="tags">
+                    <h2 class="aside-title">Tags</h2>
+                    <div class="tags-content">
+                        <span class="tag tag-pill tag-default"><a href="">graphic</a></span>
+                        <span class="tag tag-pill tag-default"><a href="">angular2</a></span>
+                        <span class="tag tag-pill tag-default"><a href="">graphic</a></span>
+                        <span class="tag tag-pill tag-default"><a href="">react</a></span>
+                        <span class="tag tag-pill tag-default"><a href="">it</a></span>
+                        <span class="tag tag-pill tag-default"><a href="">science</a></span>
+                    </div>
+                </aside>
 
             </div>
         </div>
-    </section>
+    </div>
+</main>
+<!-- end MAIN -->
 
 
+{% block footer %}
+{% include "includes/footer.html" %}
+{% endblock footer %}
 
 
-    {% block footer %}
-        {% include "includes/footer.html" %}
-    {% endblock footer %}
+<!-- EXTERNAL JAVASCRIPT -->
+<script type="text/javascript" src="{% static 'js/jquery-1.12.0.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/tether.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/retina.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/webfont.js' %}"></script>
 
-
-
-
-
-
-
+<!-- MY JAVASCRIPT -->
+<script type="text/javascript" src="{% static 'js/scripts.js' %}"></script>
 
 </body>
 </html>

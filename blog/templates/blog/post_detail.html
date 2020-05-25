@@ -1,9 +1,6 @@
 {% extends 'blog/base.html' %}
 {%load static%}
 
-<!--{% block css %}-->
-<!--<link rel="stylesheet" href="{% static 'css/blog.css' %}">-->
-<!--{% endblock css %}-->
 
 {% block title %} {{title}} {% endblock title %}
 
@@ -14,29 +11,38 @@
 
 
 {% block content %}
+<article class="green-article">
 
-      <div>
-        <a class="btn btn-default"  style="color:#0037ff" href="{% url 'post_edit' pk=post.pk %}">---Редактировать запись---<span class="glyphicon glyphicon-pencil"></span></a>
-          <br><pr>
-          {% if post.published_date %}
-            <div>
-                {{ post.published_date }}
-            </div>
-           {% endif %}
-          <h1>{{ post.title }}</h1>
-
-          <p>{{ post.text|linebreaksbr }}</p>
-        {% if post.update_date %}
-            <div>
-                {{ post.update_date }}
-            </div>
+    <div class="articles-header">
+        {% if post.published_date %}
+        <span class="articles-header-category"><a href="#" title="published"> {{ post.published_date }}</a></span>
         {% endif %}
-        <hr/>
-          {%for comment in comments%}
-          <p>{{comment.author.get_full_name}} </p>
-          <p>{{comment.created_date}}</p>
-          <p>{{comment.text}}</p>
-          {% endfor %}
+    </div>
+    <div class="articles-content">
+        <h1><a href="#">{{ post.title }}</a></h1>
+        <p>{{ post.text|linebreaksbr }}</p>
 
-      </div>
+
+        <nav class="header-nav">
+            <ul>
+                {% if post.update_date %}
+
+                <li title="update"> {{ post.update_date }}</li>
+
+                {% endif %}
+                {% if user.is_authenticated %}
+                <li class="pe-7s-refresh"><a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}">Редактировать
+                    запись</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        <hr/>
+        {%for comment in comments%}
+        <p>{{comment.author.get_full_name}} </p>
+        <p>{{comment.created_date}}</p>
+        <p>{{comment.text}}</p>
+        {% endfor %}
+    </div>
+
+</article>
 {% endblock %}
