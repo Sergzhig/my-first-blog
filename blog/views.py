@@ -4,6 +4,7 @@ from django.shortcuts import redirect
 from .models import Post, Comment
 from .forms import Post_form, Comment_form
 from django.utils import timezone
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 month_dict = {
     1: "Январь",
@@ -24,13 +25,24 @@ month_dict = {
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
     posts_five = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')[0:4]
+    paginator = Paginator(posts, 4)  # 4 поста на каждой странице
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        # Если страница не является целым числом, поставим первую страницу
+        posts = paginator.page(1)
+    except EmptyPage:
+        # Если страница больше максимальной, доставить последнюю страницу результатов
+        posts = paginator.page(paginator.num_pages)
 
     context = {
 
         "title": "Страница блога",
         "posts": posts,
         "posts_five": posts_five,
-        "arh": month_dict
+        "arh": month_dict,
+        "page": page
     }
     return render(request, 'blog/post_list.html', context=context)
 

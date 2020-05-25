@@ -30,20 +30,6 @@
     {% empty %} <p> Sorry, no posts</p>
 {% endfor %}
 
-                    <!-- PAGINATION -->
-                    <nav aria-label="...">
-                        <button class="btn-small-white pagination-back"><a title="" href="">Back</a></button>
-                        <ul class="pagination">
-                            <li class="page-item active">
-                                <a class="page-link" href="#">1 <span class="sr-only">(current)</span></a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item page-item-more"><a class="page-link" href="#">...</a></li>
-                            <li class="page-item"><a class="page-link" href="#">25</a></li>
-                        </ul>
-                        <button class="btn-small-white pagination-next"><a title="" href="">Next</a></button>
-                    </nav>
 
-
+  {% include "includes/pagination.html" with page=posts %}
 {% endblock %}
