@@ -120,3 +120,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'zhyhar.siarhei@gmail.com'
+EMAIL_HOST_PASSWORD = 'Zhig107223#'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

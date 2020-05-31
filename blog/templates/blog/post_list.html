@@ -20,16 +20,17 @@
     </div>
     <div class="articles-footer">
         <ul>
-            <li><a href="#" title=""><i class="pe-7s-comment"></i> 7 Response</a></li>
+            <li><a href="{% url 'post_detail' pk=post.pk %}" title=""><i class="pe-7s-comment"></i>
+                {{dict_comm|get_item:post.pk}} Response</a></li>
             <li><a href="#" title=""><i class="pe-7s-like"></i> 1221</a></li>
         </ul>
         <a title="" class="btn" href="{% url 'post_detail' pk=post.pk %}">Read more</a>
 
     </div>
 </article>
-    {% empty %} <p> Sorry, no posts</p>
+{% empty %} <p> Sorry, no posts</p>
 {% endfor %}
 
 
-  {% include "includes/pagination.html" with page=posts %}
+{% include "includes/pagination.html" with page=posts %}
 {% endblock %}

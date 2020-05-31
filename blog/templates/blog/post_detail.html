@@ -34,6 +34,9 @@
                 <li class="pe-7s-refresh"><a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}">Редактировать
                     запись</a></li>
                 {% endif %}
+
+                <li class="pe-7s-paper-plane"><a class="btn btn-default" href="{% url 'post_share' pk=post.pk %}">Отправить
+                    запись</a></li>
             </ul>
         </nav>
         <hr/>

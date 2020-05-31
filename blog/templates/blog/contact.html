@@ -6,7 +6,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> Zhig-сайт: {% block title %}{% endblock title %}</title>
+    <title> Zhig-сайт: contact </title>
 
     <!-- EXTERNAL CSS -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
@@ -88,13 +88,37 @@
                     <div class="get-in-touch">
                         <h2>Get in touch</h2>
                         <p class="font-primary"> Ask me a question.</p>
-                        <form action="">
+                        {% if sent %}
+                        <h1>E-mail successfully sent to Sergey Zhygar and copy to {{ form.cleaned_data.email }}</h1>
+                        <a href="/contact/">Send more</a>
+                        {% else %}
+                        <form action="." method="post">
+
+                            {%if form.errors.name%}
+                            {% for error in form.errors.name %}
+                            <p>{{error}} </p>
+                            {%endfor%}
+                            {%endif%}
                             <input class="col-xs-12 form-control" type="text" placeholder="Name" name="name">
-                            <input class="col-xs-12 form-control" type="email" placeholder="Email" name="email">
+                            {%if form.errors.email%}
+                            {% for error in form.errors.email %}
+                            <p>{{error}} </p>
+                            {%endfor%}
+                            {%endif%}
+
+                            <input class="col-xs-12 form-control" type="email" placeholder="Feedback Email"
+                                   name="email">
+                            {%if form.errors.question%}
+                            {% for error in form.errors.question %}
+                            <p>{{error}} </p>
+                            {%endfor%}
+                            {%endif%}
                             <textarea class=" col-xs-12 form-control" id="" rows="6" placeholder="Question"
                                       name="question"></textarea>
+                            {% csrf_token %}
                             <button type="submit" class="btn"><i class="pe-7s-paper-plane"></i> Send</button>
                         </form>
+                        {% endif %}
                     </div>
                 </section>
             </div>

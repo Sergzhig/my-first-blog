@@ -14,4 +14,5 @@ urlpatterns = [
                   path('post/<int:pk>/edit/', views.post_edit, name='post_edit'),
                   path('about_me/', views.about_me, name='about_me'),
                   path('contact/', views.contact, name='contact'),
+                  path('post/<int:pk>/post_share/', views.post_share, name='post_share'),
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

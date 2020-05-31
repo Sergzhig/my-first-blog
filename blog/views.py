@@ -1,10 +1,19 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.shortcuts import redirect
-from .models import Post, Comment
-from .forms import Post_form, Comment_form
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.template.defaulttags import register
+from .forms import EmailPostForm
+from .models import Post, Comment
+from .forms import Post_form, Comment_form
+from django.core.mail import send_mail
+
+
+@register.filter
+def get_item(dictionary, key):
+    return dictionary.get(key)
+
 
 month_dict = {
     1: "Январь",
@@ -25,6 +34,11 @@ month_dict = {
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
     posts_five = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')[0:4]
+    dict_comm = {}
+    for post in posts:
+        n = Comment.objects.filter(page=post.pk).count()
+        dict_comm[post.pk] = n
+
     paginator = Paginator(posts, 4)  # 4 поста на каждой странице
     page = request.GET.get('page')
     try:
@@ -42,7 +56,8 @@ def post_list(request):
         "posts": posts,
         "posts_five": posts_five,
         "arh": month_dict,
-        "page": page
+        "page": page,
+        "dict_comm": dict_comm
     }
     return render(request, 'blog/post_list.html', context=context)
 
@@ -108,7 +123,13 @@ def post_new(request):
             return redirect('post_detail', pk=post.pk)
     else:
         form = Post_form()
-    return render(request, 'blog/post_edit.html', {'form': form})
+
+    context = {
+        'form': form,
+        'title': 'new post'
+    }
+
+    return render(request, 'blog/post_edit.html', context=context)
 
 
 def post_edit(request, pk):
@@ -124,7 +145,12 @@ def post_edit(request, pk):
             return redirect('post_detail', pk=post.pk)
     else:
         form = Post_form(instance=post)
-    return render(request, 'blog/post_edit.html', {'form': form})
+    context = {
+        'form': form,
+        'title': 'edit post'
+    }
+
+    return render(request, 'blog/post_edit.html', context=context)
 
 
 def comment_new(request):
@@ -138,12 +164,64 @@ def comment_new(request):
             return redirect('post_detail', pk=comment.page_id)
     else:
         form = Comment_form()
-    return render(request, 'blog/comment_edit.html', {'form': form})
+    context = {
+        'form': form,
+        'title': 'new comment'
+    }
+
+    return render(request, 'blog/comment_edit.html', context=context)
 
 
 def about_me(request):
-    return render(request, 'blog/about_me.html')
+    context = {
+        'title': 'about'
+    }
+
+    return render(request, 'blog/about_me.html', context=context)
 
 
 def contact(request):
-    return render(request, 'blog/contact.html')
+    sent = False
+    if request.method == 'POST':
+        # Форма была отправлена
+        form = EmailPostForm(request.POST)
+        if form.is_valid():
+            # Поля формы прошли проверку
+            cd = form.cleaned_data
+
+            subject = 'mail from {} fo SergeyZhigar, back email:{}'.format(cd['name'], cd['email'])
+            message = '{} wants to ask: {}'.format(cd['name'], cd['question'])
+            send_mail(subject, message, 'zhyhar.siarhei@gmail.com', ['zhyhar.siarhei@gmail.com', cd['email']])
+            sent = True
+    else:
+        form = EmailPostForm()
+    context = {
+        'form': form,
+        'sent': sent
+    }
+    return render(request, 'blog/contact.html', context=context)
+
+
+def post_share(request, pk):
+    # Получить пост по id
+    post = get_object_or_404(Post, pk=pk)
+    sent = False
+    if request.method == 'POST':
+        # Форма была отправлена
+        form = EmailPostForm(request.POST)
+        if form.is_valid():
+            # Поля формы прошли проверку
+            cd = form.cleaned_data
+            post_url = request.build_absolute_uri('/post/{}/'.format(post.pk))
+            subject = '{} ({}) recommends you reading " {}"'.format(cd['name'], cd['email'], post.title)
+            message = 'Read "{}" at {}\n\n{}\'s question: {}'.format(post.title, post_url, cd['name'], cd['question'])
+            send_mail(subject, message, 'zhyhar.siarhei@gmail.com', [cd['to']])
+            sent = True
+    else:
+        form = EmailPostForm()
+    context = {
+        'post': post,
+        'form': form,
+        'sent': sent
+    }
+    return render(request, 'blog/share.html', context=context)

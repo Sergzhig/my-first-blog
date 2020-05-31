@@ -1,25 +1,27 @@
 <!-- PAGINATION -->
 <nav aria-label="...">
-         <p>Page {{ page.number }} of {{ page.paginator.num_pages }} </p>
+    <p>Page {{ page.number }} of {{ page.paginator.num_pages }} </p>
     {% if page.has_previous %}
     <button class="btn-small-white pagination-back"><a title="Previous page"
                                                        href="?page={{ page.previous_page_number }}">Back</a>
     </button>
     {% endif %}
+<ul class="pagination">
+    {% for i in page.paginator.page_range %}
+    {% ifequal i page.number %}
+    <li class="page-item active"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
 
-    <ul class="pagination">
-        <li class="page-item ">
-            <a class="page-link" href="?page=1">1 </a>
-        </li>
+    {% else %}
+    <li class="page-item "><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+    {% endifequal %}
+    {% endfor %}
 
-        <li class="page-item"><a class="page-link" href="?page=2">2 <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
-        <li class="page-item page-item-more"><a class="page-link" href="#">...</a></li>
-        <li class="page-item active"><a class="page-link" href="?page={{ page.paginator.num_pages }}"> {{page.paginator.num_pages}} </a></li>
     </ul>
+
+
     {% if page.has_next %}
-    <button class="btn-small-white pagination-next"><a title="Next page" href="?page={{ page.next_page_number }}">Next</a>
+    <button class="btn-small-white pagination-next"><a title="Next page"
+                                                       href="?page={{ page.next_page_number }}">Next</a>
     </button>
     {% endif %}
     <span class="current">
