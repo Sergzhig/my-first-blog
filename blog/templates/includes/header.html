@@ -75,7 +75,13 @@
                         </li>
                         <li><a href="{% url 'about_me' %}" title="About me">About me</a></li>
                         <li><a href="{% url 'contact' %}" title="Contact me">Contact me</a></li>
-                        <li class="buyproducts-link"><a href="/admin/" title="Log IN">LOG IN</a></li>
+                        {% if user.is_authenticated %}
+                        <li class="buyproducts-link"><a href={% url 'login_view' %} title="Log OUT">LOG
+                            OUT:[{{user.username}}]</a>
+
+                            {% else %}
+                        <li class="buyproducts-link"><a href={% url 'login_view' %} title="Log IN">LOG IN</a>
+                            {% endif %}
                     </ul>
                 </nav>
             </div>

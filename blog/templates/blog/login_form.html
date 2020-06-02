@@ -1,0 +1,62 @@
+{%load static%}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title> Zhig-сайт: Share a post</title>
+
+    <!-- EXTERNAL CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Pe-icon-7-stroke.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/social-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.css' %}">
+
+    <!-- MY CSS -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    <!-- FAVICON -->
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static '/img/logo.png' %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static '/img/logo.png' %}">
+    <link rel="icon" type="image/png" href="{% static '/img/logo_mb.png' %}" sizes="196x196">
+    <link rel="icon" type="image/png" href="{% static '/img/logo_mb.png' %}" sizes="96x96">
+    <link rel="icon" type="image/png" href="{% static '/img/logo_mb.png' %}" sizes="32x32">
+
+</head>
+
+<body>
+
+{% block header %}
+{% include "includes/header.html" %}
+{% endblock header %}
+
+
+<!-- MAIN -->
+<main>
+    <div class="container">
+
+
+        <!-- General informations -->
+        <div class="col-xs-12">
+            <section class="white-box">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <input type="submit" value="OK">
+                </form>
+
+                <aside class="categories">
+                    <ul>
+                        <li class="buyproducts-link-"><a href="/registration/" title="Registration">Registration</a></li>
+                    </ul>
+
+                </aside>
+            </section>
+        </div>
+
+    </div>
+</main>
+<!-- end MAIN -->

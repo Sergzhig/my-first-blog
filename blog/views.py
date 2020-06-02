@@ -4,10 +4,15 @@ from django.shortcuts import redirect
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template.defaulttags import register
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import get_user_model
 from .forms import EmailPostForm
 from .models import Post, Comment
-from .forms import Post_form, Comment_form
+from .forms import Post_form, Comment_form, RegistrationForm
 from django.core.mail import send_mail
+
+User = get_user_model()
 
 
 @register.filter
@@ -225,3 +230,44 @@ def post_share(request, pk):
         'sent': sent
     }
     return render(request, 'blog/share.html', context=context)
+
+
+def login_view(request):
+    if request.user.is_authenticated:
+        logout(request)
+        return redirect('/')
+    if request.method == "POST":
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            if request.user.is_superuser:
+                return redirect('/admin/')
+
+            else:
+                return redirect('/')
+    else:
+        form = AuthenticationForm()
+    context = {'form': form}
+    return render(request, 'blog/login_form.html', context=context)
+
+
+def registration_view(request):
+    if request.user.is_authenticated:
+        return redirect('/admin/')
+    if request.method == "POST":
+        form = RegistrationForm(data=request.POST)
+        if form.is_valid():
+            user = User.objects.create_user(
+                first_name=form.cleaned_data['first_name'],
+                last_name=form.cleaned_data['last_name'],
+                password=form.cleaned_data['password'],
+                email=form.cleaned_data['email'],
+                username=form.cleaned_data['username']
+            )
+
+            return redirect('/login/')
+    else:
+        form = RegistrationForm()
+    context = {'form': form}
+    return render(request, 'blog/login_form.html', context=context)

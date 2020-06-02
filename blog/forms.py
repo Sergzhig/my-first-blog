@@ -1,7 +1,8 @@
 from django import forms
-
+from django.contrib.auth import get_user_model
 from .models import Post, Comment
 
+User = get_user_model()
 
 class Post_form(forms.ModelForm):
     class Meta:
@@ -60,3 +61,10 @@ class EmailPostForm(forms.Form):
             else:
                 l.append(word)
         return ' '.join(l)
+
+class RegistrationForm(forms.ModelForm):
+
+    password = forms.CharField(widget=forms.PasswordInput())
+    class Meta:
+        model=User
+        fields = ['first_name', 'last_name','password', 'email', 'username']
